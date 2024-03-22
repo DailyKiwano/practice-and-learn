@@ -11,6 +11,8 @@
 # The ace would require special handling since it can have two different point values at the player's discretion.
 # Since this is the only exception, I would just have a special handler method for the ace.
 
+# color styling the terminal output: https://gist.github.com/kamito/704813
+
 import random
 import time
 
