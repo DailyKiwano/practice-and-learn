@@ -4,11 +4,18 @@
 # call should be escalated to a director. Design the classes and data structures for this problem. Implement a method
 # dispatchCall() which assigns a call to the first available employee.
 #
-# I would have a call class and a employee class, and use queues for both available employees and calls. When a call
-# comes in, it gets added to the call queue. Employees start in an employee queue. If a call is in the call queue, it
-# gets paired with an available employee in the employee queue. When this happens, the call is removed from its queue,
-# the employee is removed from their queue, and the employee and call classes get their availability/assigned statuses
-# updated. When the call is closed, the employee availability gets set to true and they get added back to the queue.
+# A Call class with an a call_Id and an assigned_to list with ID of each respondent who got assigned to them.
+# Calls go into respondent_queue (first in first out). There are be 3 "call waiting" queues: respondents,
+# managers, and directors would all have their own call waiting qs. "call takers" would have their own queues with their
+# employee IDs in them. Calls would deque by checking the associated call-taker q. If no call takers were available,
+# the calls would just continue to queue up. The respondents would be able to call a method that moves the call to the
+# manager queue, and managers could call a method that moves the call to the director queue or the respondent queue.
+# in the case of a higher level employee sending a call back down to a lower level employee (like a manager sending the
+# call back to a respondent) I would have "call waiting" stacks that would have priority over the queues. This could
+# be done with a priority queue instead, but I am anticipating this scenario to be uncommon and may want to keep the
+# main call waiting queue as simple as possible.
+
+
 from collections import deque
 
 def main():
